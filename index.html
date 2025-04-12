@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +38,8 @@
     }
     #output {
       margin-top: 15px;
+      font-size: 14px;
+      color: #333;
     }
   </style>
 </head>
@@ -54,17 +55,32 @@
     async function bypass() {
       const input = document.getElementById('linkInput').value;
       const output = document.getElementById('output');
+      
+      // Clear the output before the operation
       output.innerHTML = "جاري التحميل...";
+
+      if (!input.trim()) {
+        output.innerHTML = "الرجاء إدخال رابط Linkvertise.";
+        return;
+      }
+
       try {
+        // Attempt to fetch the bypass data
         const response = await fetch(`https://bypass.bot.nu/bypass2?url=${encodeURIComponent(input)}`);
+
+        if (!response.ok) {
+          throw new Error("حدث خطأ في الاتصال بالخادم.");
+        }
+
         const data = await response.json();
+
         if (data && data.destination) {
           output.innerHTML = `<a href="${data.destination}" target="_blank">الرابط المباشر: ${data.destination}</a>`;
         } else {
-          output.innerHTML = "فشل في الحصول على الرابط.";
+          output.innerHTML = "فشل في الحصول على الرابط. حاول مرة أخرى.";
         }
       } catch (err) {
-        output.innerHTML = "حدث خطأ أثناء محاولة التخطي.";
+        output.innerHTML = `حدث خطأ أثناء محاولة التخطي: ${err.message}`;
       }
     }
   </script>
