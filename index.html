@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linkvertise Bypass</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Linkvertise Bypass</h2>
+    <input type="text" id="linkInput" placeholder="ضع رابط Linkvertise هنا" />
+    <button onclick="bypass()">Bypass</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    async function bypass() {
+      const input = document.getElementById('linkInput').value;
+      const output = document.getElementById('output');
+      output.innerHTML = "جاري التحميل...";
+      try {
+        const response = await fetch(`https://bypass.bot.nu/bypass2?url=${encodeURIComponent(input)}`);
+        const data = await response.json();
+        if (data && data.destination) {
+          output.innerHTML = `<a href="${data.destination}" target="_blank">الرابط المباشر: ${data.destination}</a>`;
+        } else {
+          output.innerHTML = "فشل في الحصول على الرابط.";
+        }
+      } catch (err) {
+        output.innerHTML = "حدث خطأ أثناء محاولة التخطي.";
+      }
+    }
+  </script>
+</body>
+</html>
